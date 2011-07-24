@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CameraLight</string>
+    <string name="light_on">ライトON</string>
+    <string name="light_off">ライトOFF</string>
+    <string name="camera_open_error">カメラをオープンできませんでした</string>
+</resources>
