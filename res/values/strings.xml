@@ -4,4 +4,10 @@
 	<string name="light_on">ライトON</string>
 	<string name="light_off">ライトOFF</string>
 	<string name="camera_open_error">カメラをオープンできませんでした</string>
+	<string name="about_label">About</string>
+	<string name="about_string">カメラのフラッシュ機能を使用して、Android端末を懐中電灯の代わりとして使うアプリです。\n\n
+機能は単純で、トグルボタンの ON/OFF でカメラのフラッシュを ON/OFF します。\n\n
+アイコンには "Simiographics" 氏の "Flashlight icon" を使用させて頂きました。\n
+http://www.iconfinder.com/icondetails/46846/512/flashlight_icon?r=1</string>
+	<string name="ok_label">OK</string>
 </resources>

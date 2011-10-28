@@ -28,12 +28,21 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package nmtysh.android.app.cameralight;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.text.util.Linkify;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class CameraLightActivity extends Activity {
 	Camera camera;
@@ -42,20 +51,28 @@ public class CameraLightActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.main);
 		tb = (ToggleButton) findViewById(R.id.toggleButton1);
 		tb.setOnCheckedChangeListener(listener);
+		tb.setChecked(true);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		tb.setChecked(true);
+
+		// 画面を消灯させない
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+
+		// 常時点灯を解除
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 		if (camera != null) {
 			camera.release();
 			camera = null;
@@ -88,4 +105,48 @@ public class CameraLightActivity extends Activity {
 			}
 		}
 	};
+
+	/**
+	 * オプションメニューを作成します。
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		boolean result = super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return result;
+	}
+
+	/**
+	 * オプションメニューのクリックイベントを処理します。
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_about:
+				// About ダイアログを表示
+				TextView textView = new TextView(this);
+				textView.setAutoLinkMask(Linkify.WEB_URLS);
+				textView.setText(R.string.about_string);
+				ScrollView scrollView = new ScrollView(this);
+				scrollView.addView(textView);
+				AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+				dialog.setTitle(R.string.about_label);
+				dialog.setView(scrollView);
+				dialog.setPositiveButton(R.string.ok_label,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						});
+				dialog.create().show();
+				break;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
 }
+// EOF
