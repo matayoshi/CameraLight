@@ -132,6 +132,7 @@ public class CameraLightActivity extends Activity {
 				scrollView.addView(textView);
 				AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 				dialog.setTitle(R.string.about_label);
+				dialog.setIcon(android.R.drawable.ic_dialog_info);
 				dialog.setView(scrollView);
 				dialog.setPositiveButton(R.string.ok_label,
 						new DialogInterface.OnClickListener() {
